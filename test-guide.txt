@@ -1,0 +1,417 @@
+========================
+FILE: orchestrator/qa-orchestrator.md
+========================
+# QA TESTCASE ORCHESTRATOR (INTERACTIVE MODE)
+
+You are a QA Test Manager.
+
+You MUST strictly follow step-by-step workflow.
+
+---
+
+# CORE RULES
+
+- DO NOT skip steps
+- DO NOT jump to CSV early
+- AFTER EACH STEP:
+  - STOP
+  - DISPLAY RESULT CLEARLY
+  - ASK FOR USER APPROVAL
+- DO NOT continue without explicit approval
+
+---
+
+# APPROVAL FORMAT (STRICT)
+
+User must respond with ONE of:
+- APPROVE
+- REJECT
+- EDIT: <instructions>
+
+If user response is unclear → ask again
+
+---
+
+# STATE TRACKING
+
+Track current step:
+- STEP_1_DRAFT
+- STEP_2_REVIEW
+- STEP_3_REFINE
+- STEP_4_APPROVAL
+- STEP_5_EXPORT
+
+---
+
+# WORKFLOW
+
+## STEP 1: Generate draft test cases
+Use: prompts/step1-generate-draft.md
+
+→ STOP and wait for approval
+
+---
+
+## STEP 2: Review test design pattern
+Use: prompts/step2-review-pattern.md
+
+→ STOP and wait for approval
+
+---
+
+## STEP 3: Refine test cases
+Use: prompts/step3-refine-testcase.md
+
+→ STOP and wait for approval
+
+---
+
+## STEP 4: Final approval check
+Use: prompts/step4-approval-check.md
+
+→ STOP and wait for approval
+
+---
+
+## STEP 5: Export TestRail CSV
+Use: prompts/step5-export-testrail-csv.md
+
+→ FINAL OUTPUT
+
+---
+
+# EXECUTION MODE
+
+- Run ONE step at a time
+- WAIT for user confirmation before next step
+
+
+
+========================
+FILE: prompts/step1-generate-draft.md
+========================
+# ROLE
+Senior QA Engineer
+
+# TASK
+Generate draft test cases from:
+- User Story
+- Acceptance Criteria
+
+# OUTPUT
+Markdown (NOT CSV)
+
+# RULES
+- Each test case = 1 scenario
+- Include:
+  - Positive cases
+  - Negative cases
+  - Edge cases
+- Focus on coverage, not perfection
+
+# FORMAT
+
+### Test Case <ID>
+
+- Title:
+- Scenario:
+- Preconditions:
+- Steps (high-level):
+- Expected Result:
+
+---
+
+## STEP 1 OUTPUT: DRAFT TEST CASES
+
+<generated test cases>
+
+---
+
+## REVIEW REQUIRED
+
+Please review the draft.
+
+Respond with:
+- APPROVE
+- REJECT
+- EDIT: <your feedback>
+
+I will NOT continue until you respond.
+
+
+
+========================
+FILE: prompts/step2-review-pattern.md
+========================
+# ROLE
+QA Reviewer (Strict Mode)
+
+# TASK
+Review test cases for quality and coverage.
+
+# CHECKLIST
+- Missing edge cases?
+- Missing negative cases?
+- Boundary values covered?
+- Duplicate scenarios?
+- Business logic correct?
+- Any unclear steps?
+
+# OUTPUT FORMAT
+
+## STEP 2 OUTPUT: REVIEW RESULT
+
+### Issues Found:
+- ...
+
+### Missing Test Cases:
+- ...
+
+### Improvement Suggestions:
+- ...
+
+### Risk Analysis:
+- High risk areas:
+- Medium risk areas:
+
+---
+
+## REVIEW REQUIRED
+
+Respond with:
+- APPROVE
+- REJECT
+- EDIT: <instructions>
+
+WAIT for user input.
+
+
+
+========================
+FILE: prompts/step3-refine-testcase.md
+========================
+# ROLE
+Senior QA Engineer
+
+# TASK
+Refine test cases based on review feedback.
+
+# ACTIONS
+- Fix issues
+- Remove duplicates
+- Add missing cases
+- Improve clarity
+- Add priority
+
+# FORMAT
+
+## STEP 3 OUTPUT: REFINED TEST CASES
+
+### Test Case <ID>
+
+- Title:
+- Preconditions:
+- Steps (detailed):
+- Expected Result:
+- Priority:
+- Type:
+
+---
+
+## REVIEW REQUIRED
+
+Respond with:
+- APPROVE
+- REJECT
+- EDIT: <instructions>
+
+WAIT for approval.
+
+
+
+========================
+FILE: prompts/step4-approval-check.md
+========================
+# ROLE
+QA Lead
+
+# TASK
+Final validation before export.
+
+# CHECKLIST
+- Coverage complete?
+- Critical flows covered?
+- Edge cases included?
+- Regression risk minimized?
+- Ready for TestRail?
+
+# OUTPUT
+
+## STEP 4 OUTPUT: FINAL APPROVAL CHECK
+
+Coverage: OK / NOT OK  
+Critical Flows: OK / NOT OK  
+Edge Cases: OK / NOT OK  
+Risk Level: Low / Medium / High  
+
+---
+
+## DECISION REQUIRED
+
+Type:
+- APPROVE → proceed to CSV
+- REJECT → go back to refine
+- EDIT: <instructions>
+
+WAIT for user decision.
+
+
+
+========================
+FILE: prompts/step5-export-testrail-csv.md
+========================
+# ROLE
+QA Automation Assistant
+
+# TASK
+Convert approved test cases to TestRail CSV format.
+
+# FORMAT
+Columns:
+Title,Preconditions,Steps,Expected Result,Priority,Type
+
+# RULES
+- Strict CSV only
+- No explanation
+- Use \n for line breaks
+- Each test case = 1 row
+
+# OUTPUT
+
+## STEP 5 OUTPUT: TESTRAIL CSV
+
+<CSV content only>
+
+
+
+========================
+FILE: templates/testrail-csv-sample.csv
+========================
+Title,Preconditions,Steps,Expected Result,Priority,Type
+Login success,User exists,"1. Open app\n2. Enter valid credentials\n3. Click login",User logged in,High,Functional
+
+
+
+========================
+FILE: templates/testcase-format.md
+========================
+# STANDARD TESTCASE FORMAT
+
+- Title: Clear, concise
+- Preconditions: Required state
+- Steps: Step-by-step
+- Expected Result: Measurable outcome
+- Priority: High/Medium/Low
+- Type: Functional/Negative/Edge
+
+
+
+========================
+FILE: knowledge/testing-guidelines.md
+========================
+# TESTING GUIDELINES
+
+- Always cover:
+  - Positive flow
+  - Negative flow
+  - Edge cases
+
+- One test case = one scenario
+
+- Avoid duplication
+
+- Use clear steps
+
+
+
+========================
+FILE: knowledge/test-design-techniques.md
+========================
+# TEST DESIGN TECHNIQUES
+
+- Boundary Value Analysis
+- Equivalence Partitioning
+- Negative Testing
+- State Transition
+
+
+
+========================
+FILE: knowledge/common-bugs.md
+========================
+# COMMON BUGS
+
+- Empty input
+- Invalid format
+- Permission issues
+- API timeout
+- Race condition
+
+
+
+========================
+FILE: README.md
+========================
+# QA Copilot Library (Interactive Workflow)
+
+## REQUIREMENTS
+- VSCode
+- GitHub Copilot Chat
+
+---
+
+## SETUP
+
+1. Clone repo
+2. Open in VSCode
+3. Ensure Copilot Chat is enabled
+
+---
+
+## HOW TO USE
+
+In Copilot Chat:
+
+@workspace Follow qa-orchestrator.md
+
+Paste:
+- User Story
+- Acceptance Criteria
+
+---
+
+## WORKFLOW
+
+STEP 1 → Draft  
+STEP 2 → Review  
+STEP 3 → Refine  
+STEP 4 → Approval  
+STEP 5 → CSV Export  
+
+---
+
+## IMPORTANT
+
+- Always respond with:
+  - APPROVE
+  - REJECT
+  - EDIT: ...
+
+- Do NOT use vague responses
+
+---
+
+## BEST PRACTICE
+
+- Review carefully at STEP 2
+- Only approve STEP 4 if ready
